@@ -44,3 +44,23 @@ sudo apt install python3.12-venv
 sudo apt install libpython3.12-dev
 sudo apt install build-essential
 ```
+
+Install `uv`
+```
+sudo apt install curl
+curl --version
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Open a new WSL session
+```
+which uv
+cd <intended working dir's parent dir>
+ssh-keygen -C "rushilgupta49@gmail.com"
+cat ~/.ssh/id_ed25519.pub
+git clone git@github.com:rushil-x-gupta/gpu-inference-server.git
+cd gpu-inference-server/
+uv venv vllm-env --python 3.12 --seed
+source vllm-env/bin/activate
+uv pip install vllm --torch-backend=cu126
+```
