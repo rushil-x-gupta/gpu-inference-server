@@ -33,3 +33,14 @@ In `.bashrc`, add the following to the very bottom of the file.
 ```
 export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
 ```
+
+Open a new WSL session
+```
+nvcc --version
+python3 --version
+sudo apt update && sudo apt upgrade
+sudo apt install python3.12-dev
+sudo apt install python3.12-venv
+sudo apt install libpython3.12-dev
+sudo apt install build-essential
+```
