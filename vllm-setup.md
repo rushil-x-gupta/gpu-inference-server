@@ -27,4 +27,9 @@ wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt update
 sudo apt-get -y install cuda-toolkit-12-6
+sudo nano .bashrc
+```
+In `.bashrc`, add the following to the very bottom of the file.
+```
+export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
 ```
