@@ -64,3 +64,7 @@ uv venv vllm-env --python 3.12 --seed
 source vllm-env/bin/activate
 uv pip install vllm --torch-backend=cu126
 ```
+
+Reference:
+- [Install and Run Locally LLMs using vLLM library on Windows](https://www.youtube.com/watch?v=APUDwZvcdYs&t=337s)
+- [Install vLLM on RTX 5060 Ti (16GB) & RTX 5070 / 5080 / 5090 GPUs | Complete Guide](https://www.youtube.com/watch?v=bwaA29Sf0ME)
