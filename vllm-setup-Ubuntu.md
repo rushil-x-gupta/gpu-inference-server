@@ -1,24 +1,16 @@
 # Ubuntu Setup
 
-In Powershell
+Begin with basic update/upgrade and tools
 ```
-wsl --list --online
+sudo apt update
+sudo apt upgrade
+sudo apt install emacs jq
+sudo snap install --classic code
 ```
-Verify that `Ubuntu 24.04` appears amongst the output.
-
-```
-wsl --install -d Ubuntu-24.04
-```
-Install `Ubuntu 24.04`.
-
-```
-wsl --list --verbose
-```
-Verify installation.
 
 # CUDA setup
 
-In WSL
+In Ubuntu terminal
 ```
 mkdir -p developer/github.com/rushil-x-gupta
 ls
@@ -31,10 +23,10 @@ sudo nano .bashrc
 ```
 In `.bashrc`, add the following to the very bottom of the file.
 ```
-export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
+export PATH=/usr/local/cuda-13.2/bin${PATH:+:${PATH}}
 ```
 
-Open a new WSL session
+Open a new terminal session
 ```
 nvcc --version
 python3 --version
@@ -52,7 +44,7 @@ curl --version
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Open a new WSL session
+Open a new terminal session
 ```
 which uv
 cd <intended working dir's parent dir>
@@ -62,7 +54,7 @@ git clone git@github.com:rushil-x-gupta/gpu-inference-server.git
 cd gpu-inference-server/
 uv venv vllm-env --python 3.12 --seed
 source vllm-env/bin/activate
-uv pip install vllm --torch-backend=cu126
+uv pip install vllm --torch-backend=cu132
 ```
 
 Reference:
