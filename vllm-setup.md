@@ -1,3 +1,14 @@
+### Versions in use
+vLLM: 0.26.0
+Python: 3.12.3
+CUDA: 13.2
+
+Deployed on RTX 5080
+
+### Models successfully deployed
+- Qwen3Guard-Gen-0.6B
+- Qwen2.5-3B-Instruct
+
 # WSL Setup
 
 In Powershell
@@ -26,12 +37,12 @@ python --version
 wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt update
-sudo apt-get -y install cuda-toolkit-12-6
+sudo apt-get -y install cuda-toolkit-13-2
 sudo nano .bashrc
 ```
 In `.bashrc`, add the following to the very bottom of the file.
 ```
-export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
+export PATH=/usr/local/cuda-13.2/bin${PATH:+:${PATH}}
 ```
 
 Open a new WSL session
@@ -62,7 +73,7 @@ git clone git@github.com:rushil-x-gupta/gpu-inference-server.git
 cd gpu-inference-server/
 uv venv vllm-env --python 3.12 --seed
 source vllm-env/bin/activate
-uv pip install vllm --torch-backend=cu126
+uv pip install vllm --torch-backend=cu132
 ```
 
 Reference:
