@@ -1,0 +1,32 @@
+[
+    {
+        "max-concurrency": 16, 
+        "random-input-len": 128,  
+        "random-output-len": 256, 
+        "num-prompts": 300
+    },
+    {
+        "max-concurrency": 16, 
+        "random-input-len": 512,  
+        "random-output-len": 256, 
+        "num-prompts": 300
+    },
+    {
+        "max-concurrency": 16, 
+        "random-input-len": 1024, 
+        "random-output-len": 256, 
+        "num-prompts": 300
+    },
+    {
+        "max-concurrency": 16, 
+        "random-input-len": 2048, 
+        "random-output-len": 256, 
+        "num-prompts": 300
+    },
+    {
+        "max-concurrency": 16, 
+        "random-input-len": 4096, 
+        "random-output-len": 256, 
+        "num-prompts": 300
+    }
+]

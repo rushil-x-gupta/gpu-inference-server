@@ -1,0 +1,20 @@
+[
+    {
+        "max-concurrency": 1, 
+        "random-input-len": 1024, 
+        "random-output-len": 512, 
+        "num-prompts": 20
+    },
+    {
+        "max-concurrency": 2, 
+        "random-input-len": 1024,
+        "random-output-len": 512,
+        "num-prompts": 20
+    },
+    {
+        "max-concurrency": 4, 
+        "random-input-len": 1024, 
+        "random-output-len": 512, 
+        "num-prompts": 20
+    }
+]
