@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "${SCRIPT_DIR}"
+
 MODEL="Qwen/Qwen2.5-3B-Instruct"
 HOST="127.0.0.1"
 PORT="8000"
-RESULTS_DIR="benchmarks/results"
-TEMP_LOG="benchmarks/analysis/temp_log.csv"
+RESULTS_DIR="results"
+TEMP_LOG="analysis/temp_log.csv"
 
-mkdir -p benchmarks/analysis
+mkdir -p analysis
 
 # Start GPU telemetry logging in the background, 1 sample/sec, timestamped
 # so we can align it against each run's actual wall-clock window afterward.
@@ -32,7 +35,7 @@ echo "=== Thermal check: output-length 2048 and 4096, 6 repeats each ==="
 vllm bench sweep serve \
   --serve-cmd "${SERVE_CMD}" \
   --bench-cmd "${BENCH_CMD}" \
-  --bench-params benchmarks/thermal_check.json \
+  --bench-params config/thermal_check.json \
   --output-dir "${RESULTS_DIR}" \
   --experiment-name thermal_check \
   --num-runs 6

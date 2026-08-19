@@ -55,7 +55,8 @@ def plot_sweep(df: pd.DataFrame, sweep: str):
         ax.set_xlabel(AXIS_LABELS[sweep])
         ax.grid(alpha=0.3)
         if sweep in ("concurrency",):
-            ax.set_xscale("log", base=2)
+            # ax.set_xscale("log", base=2)
+            ax.set_xscale("linear")
 
     fig.tight_layout()
     OUTDIR.mkdir(parents=True, exist_ok=True)
@@ -66,6 +67,6 @@ def plot_sweep(df: pd.DataFrame, sweep: str):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("benchmarks/analysis/combined_summary.csv")
+    df = pd.read_csv("combined_summary.csv")
     for sweep in ["concurrency", "input_length", "output_length"]:
         plot_sweep(df, sweep)
