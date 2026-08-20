@@ -61,6 +61,10 @@ What I have found so far regarding each variable's impact on throughput and late
 
 ![Impact of various output token lengths on throughput, TTFT, and TPOT](benchmarks/analysis/plots/output_length_sweep.png)
 
+Throughput scales approximately linearly through concurrency ~16, then degrades sharply. By concurrency 128, TTFT and TPOT nearly double for just about 10% more throughput than concurrency 64 delivered. Past that point, additional time on the GPU buys diminishing returns on latency degradation for larger batch sizes, not real capacity gain. The practical ceiling for cost-effective model serving sits around concurrency 16-32, past which scaling out to a second GPU beats scaling up batch size.
+
+Growing input length costs throughput far more than growing output length (−66% vs. −23%), because longer prompts immediately tax the shared KV-cache budget across every concurrent sequence at once, while longer generations only accumulate that cost gradually. Practically, this means long-context workloads (RAG, document summarization) strain the VRAM limits of a consumer card harder than long-generation workloads (extended reasoning, long-form writing) at equivalent concurrency.
+
 ## Next Steps:
 1. Log GPU telemetry (nvidia-smi) alongside the sweep to see whether the sublinear drop-off observed in the concurrency sweep is compute-bound or memory-bandwidth-bound at each concurrency level.
 2. To make operation of the server more reproducible and easier to use, parametrize the sweep commands to accept the following as parameters:<br>
@@ -70,6 +74,6 @@ What I have found so far regarding each variable's impact on throughput and late
 3. To ensure the server is cross-model-compatible, run it with larger, more capable models (e.g. LLama-3.1-8B)
 4. Investigate feasibility of connecting other GPUs (e.g. Laptop RTX 3060) over a home network
 
-As AI infrastructure leans more into locally hosting models, understanding on-prem bottlenecks and optimizing accordingly is more important than ever. If you're curious about the project and would like to know more, send me a message and I'll share my repo with you!
+As AI infrastructure leans more into locally hosting models, understanding on-prem bottlenecks and optimizing accordingly is more important than ever. If you're curious about the project and would like to know more, send me a message on LinkedIn!
 
 Open to feedback from anyone working on AI infrastructure, model benchmarking, and ML optimization! Also open to conversations about opportunities in this space.
