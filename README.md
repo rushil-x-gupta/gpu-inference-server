@@ -63,32 +63,13 @@ What I have found so far regarding each variable's impact on throughput and late
 
 ## Next Steps:
 1. Log GPU telemetry (nvidia-smi) alongside the sweep to see whether the sublinear drop-off observed in the concurrency sweep is compute-bound or memory-bandwidth-bound at each concurrency level.
-2. To make operation of the server more reproducible and easier to use, parametrize the sweep commands to accept:<br>
+2. To make operation of the server more reproducible and easier to use, parametrize the sweep commands to accept the following as parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- specific config files to sweep<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- specific models for vLLM to serve<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- option to track GPU metrics alongside data sweeps<br>
 3. To ensure the server is cross-model-compatible, run it with larger, more capable models (e.g. LLama-3.1-8B)
+4. Investigate feasibility of connecting other GPUs (e.g. Laptop RTX 3060) over a home network
 
 As AI infrastructure leans more into locally hosting models, understanding on-prem bottlenecks and optimizing accordingly is more important than ever. If you're curious about the project and would like to know more, send me a message and I'll share my repo with you!
 
 Open to feedback from anyone working on AI infrastructure, model benchmarking, and ML optimization! Also open to conversations about opportunities in this space.
-
-
-- validate vLLM working on WSL2
-- come up with various configs for the data sweeps
-- test if benchmarks work on a single config
-- test if benchmarks work on multiple configs
-- run first sweep and analyze results
-	- found the batch size bound (n=16), begins declining in efficiency the higher the batch size goes from there
-
-- run dmon alongside the sweep to determine the resource bounds for each config
-- parametrize the sweep commands to accept:
-	- which config files
-	- which model (if multiple models are run)
-	- if you want to run dmon alongside
-- run with a larger model
-- final writeup
-
-- bring the Laptop 3060 into the mix
-- design a setup for balancing requests to either machine 
-	- orchestration (K8s?)
