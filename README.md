@@ -2,7 +2,14 @@
 
 ## Introduction
 This study focuses on the tradeoffs of performance and cost-effectiveness of LLM serving on consumer GPUs such as the NVIDIA RTX 5080. 
-I recently got ahold of a souped up PC and decided to build my own inference server to develop an understanding of a vLLM-based server's throughput and latency.  
+I recently got ahold of a souped up PC and decided to build my own inference server to develop an understanding of a vLLM-based server's throughput and latency.
+
+>[!NOTE]
+> Some key assumptions:<br>
+> WSL2: Ubuntu 24.04<br>
+> `cuda-toolkit`: 13.2<br>
+> Model: Qwen2.5-3B-Instruct<br>
+> GPU: NVIDIA RTX 5080<br>
 
 To conduct this study, I have structured the project accordingly:
 
