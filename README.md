@@ -6,7 +6,7 @@ I recently got ahold of a souped up PC and decided to build my own inference ser
 
 >[!NOTE]
 > Some key assumptions:<br>
-> WSL2: Ubuntu 24.04<br>
+> OS: Ubuntu 24.04 via WSL2<br>
 > `cuda-toolkit`: 13.2<br>
 > Model: Qwen2.5-3B-Instruct<br>
 > GPU: NVIDIA RTX 5080<br>
