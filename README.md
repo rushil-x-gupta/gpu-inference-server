@@ -13,7 +13,7 @@ I recently got ahold of a souped up PC and decided to build my own inference ser
 
 To conduct this study, I have structured the project accordingly:
 
-![Overall Architecture](docs/ArchDiagram.png)
+<img src="docs/ArchDiagram.png" width="450" height="501">
 
 ## Method
 
