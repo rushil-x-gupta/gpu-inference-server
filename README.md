@@ -52,12 +52,16 @@ What I have found so far regarding each variable's impact on throughput and late
   - TTFT (time-to-first-token, ms): scales approximately linearly with concurrency across all tested batch sizes.
   - TPOT (time-per-output-token, ms): scales approximately linearly with concurrency across all tested batch sizes.
 
+>Input token length held at 1024 tokens, output token length held at 512 tokens.
+
 ![Impact of various batch sizes on throughput, TTFT, and TPOT](benchmarks/analysis/plots/concurrency_sweep.png)
 
 **Input Token Length**
   - Throughput (tokens/sec): scales inversely with input token length
   - TTFT (time-to-first-token, ms): scales approximately linearly with input token length across all tested token lengths. The rate of increase is slightly more irregular compared to the rate of increase in TPOT with the same varied token lengths.
   - TPOT (time-per-output-token, ms): scales approximately linearly with input token length across all tested token lengths.
+
+>Batch size held at 16 requests, output token length held at 256 tokens.
 
 ![Impact of various input token lengths on throughput, TTFT, and TPOT](benchmarks/analysis/plots/input_length_sweep.png)
 
@@ -66,6 +70,8 @@ What I have found so far regarding each variable's impact on throughput and late
   - TTFT (time-to-first-token, ms): relationship is non-monotonic. TTFT initially decreases across token lengths of 128 and 256, then begins increasing approximately monotonically across the remaining token lengths. As TTFT begins increasing, however, each tested token length displays non-negligible run-to-run variance.
   - TPOT (time-per-output-token, ms): relationship is non-monotonic. TPOT initially decreases across token lengths of 128, 256, and 512, then begins increasing approximately monotonically across the remaining token lengths. As TPOT begins increasing, however, each tested token length displays non-negligible run-to-run variance.
 
+>Batch size held at 16 requests, input token length held at 256 tokens.
+
 ![Impact of various output token lengths on throughput, TTFT, and TPOT](benchmarks/analysis/plots/output_length_sweep.png)
 
 Throughput scales approximately linearly through concurrency ~16, then degrades sharply. By concurrency 128, TTFT and TPOT nearly double for just about 10% more throughput than concurrency 64 delivered. Past that point, additional time on the GPU buys diminishing returns on latency degradation for larger batch sizes, not real capacity gain. The practical ceiling for cost-effective model serving sits around concurrency 16-32, past which scaling out to a second GPU beats scaling up batch size.
@@ -73,13 +79,16 @@ Throughput scales approximately linearly through concurrency ~16, then degrades 
 Growing input length costs throughput far more than growing output length (−66% vs. −23%), because longer prompts immediately tax the shared KV-cache budget across every concurrent sequence at once, while longer generations only accumulate that cost gradually. Practically, this means long-context workloads (RAG, document summarization) strain the VRAM limits of a consumer card harder than long-generation workloads (extended reasoning, long-form writing) at equivalent concurrency.
 
 ## Next Steps:
-1. Log GPU telemetry (nvidia-smi) alongside the sweep to see whether the sublinear drop-off observed in the concurrency sweep is compute-bound or memory-bandwidth-bound at each concurrency level.
-2. To make operation of the server more reproducible and easier to use, parametrize the sweep commands to accept the following as parameters:<br>
+1. Log GPU telemetry (`nvidia-smi` or `nsys`) alongside the sweep to see whether the sublinear drop-off observed in the concurrency sweep is compute-bound or memory-bandwidth-bound at each concurrency level.
+2. Re-run sweep using `--no-enable-prefix-caching` to disable KV cache, so memory constraints can be clearly established.
+3. To make operation of the server more reproducible and easier to use, parametrize the sweep commands to accept the following as parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- specific config files to sweep<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- specific models for vLLM to serve<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- option to track GPU metrics alongside data sweeps<br>
-3. To ensure the server is cross-model-compatible, run it with larger, more capable models (e.g. LLama-3.1-8B)
-4. Investigate feasibility of connecting other GPUs (e.g. Laptop RTX 3060) over a home network
+4. To ensure the server is cross-model-compatible, run it with larger, more capable models (e.g. LLama-3.1-8B)
+5. Implement cross-GPU compatibility (e.g. ROCm compatibility)
+6. Implement cross-OS compatibility (e.g. MacOS, other Linux versions)
+7. Investigate feasibility of connecting other GPUs (e.g. Laptop RTX 3060) over a home network
 
 As AI infrastructure leans more into locally hosting models, understanding on-prem bottlenecks and optimizing accordingly is more important than ever. If you're curious about the project and would like to know more, send me a message on LinkedIn!
 
